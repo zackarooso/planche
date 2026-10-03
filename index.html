@@ -1,0 +1,529 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#e7dcc2">
+<title>Planche</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=IM+Fell+English+SC&display=swap" rel="stylesheet">
+<style>
+html, body { margin: 0; height: 100%; background: #e7dcc2; }
+body { color: #3b3226; font-family: 'IM Fell English', Georgia, 'Times New Roman', serif; -webkit-text-size-adjust: 100%; overflow: hidden; }
+.deck { display: flex; height: 100vh; height: 100dvh; overflow-x: auto; overflow-y: hidden; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; scrollbar-width: none; overscroll-behavior-x: contain; }
+.deck::-webkit-scrollbar { display: none; }
+.page { flex: 0 0 100%; height: 100%; box-sizing: border-box; scroll-snap-align: start; scroll-snap-stop: always; padding: 14px 14px 12px; display: flex; justify-content: center; background-image: radial-gradient(ellipse at center, rgba(120,95,55,0) 55%, rgba(95,72,38,0.22) 100%); }
+.inner { width: 100%; max-width: 430px; min-height: 0; display: flex; flex-direction: column; gap: 12px; }
+.card { flex: 1 1 0; min-height: 0; display: flex; border: 2px solid #3b3226; padding: 3px; }
+.frame { flex: 1 1 0; min-width: 0; min-height: 0; display: flex; flex-direction: column; border: 1px solid #3b3226; }
+.num { text-align: center; font-family: 'IM Fell English SC', Georgia, serif; font-size: 20px; letter-spacing: 0.2em; padding: 5px 0 4px; border-bottom: 1px solid #3b3226; }
+.art { flex: 1 1 0; min-height: 0; background: #3b3226; }
+.art svg { display: block; width: 100%; height: 100%; }
+h1 { margin: 0; text-align: center; font-family: 'IM Fell English SC', Georgia, serif; font-weight: 400; font-size: 23px; line-height: 1.1; letter-spacing: 0.14em; padding: 9px 0 10px; border-top: 1px solid #3b3226; }
+.cap { margin: 0; padding: 0 10px; min-height: 5.6em; font-size: 17px; line-height: 1.4; text-align: center; }
+.foot { display: flex; justify-content: space-between; align-items: baseline; font-size: 14px; padding: 0 4px; }
+.pips { font-family: 'IM Fell English SC', Georgia, serif; letter-spacing: 0.2em; }
+.pips b { font-weight: 400; border-bottom: 2px solid #a8842c; padding-bottom: 2px; }
+.hint { font-style: italic; }
+.lbl { font-style: italic; font-size: 14px; stroke: none; }
+.motto { font-style: italic; font-size: 12.5px; stroke: none; }
+
+.tw { animation: tw 4s ease-in-out infinite; }
+.t2 { animation-delay: 1.3s; }
+.t3 { animation-delay: 2.6s; }
+.flow { stroke-dasharray: 2 8; animation: flow 2.4s linear infinite; }
+@keyframes tw { 0% { opacity: 0.25; } 50% { opacity: 1; } 100% { opacity: 0.25; } }
+@keyframes flow { to { stroke-dashoffset: -40; } }
+
+.c1 .spin { transform-origin: 165px 74px; animation: spin 120s linear infinite; }
+.c1 .blink { transform-box: fill-box; transform-origin: center; animation: blink 7s ease-in-out infinite; }
+.c1 .up { stroke-dasharray: 1.5 9; animation: up 3.4s linear infinite; }
+.c1 .sway { transform-origin: 165px 322px; animation: sway 8s ease-in-out infinite alternate; }
+.c1 .breath { animation: breath 5s ease-in-out infinite; }
+.c1 .b2 { animation-delay: 1.6s; }
+@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes blink { 0% { transform: scaleY(1); } 92% { transform: scaleY(1); } 95% { transform: scaleY(0.08); } 98% { transform: scaleY(1); } 100% { transform: scaleY(1); } }
+@keyframes up { to { stroke-dashoffset: 42; } }
+@keyframes sway { from { transform: rotate(-1deg); } to { transform: rotate(1deg); } }
+@keyframes breath { 0% { opacity: 0.15; transform: translateX(0); } 50% { opacity: 0.9; } 100% { opacity: 0.15; transform: translateX(8px); } }
+
+.c2 .bolt { animation: bolt 2.8s linear infinite; }
+.c2 .spark { transform-box: fill-box; transform-origin: center; animation: spark 2.8s ease-in-out infinite; }
+.c2 .glory { animation: tw 5s ease-in-out infinite; }
+.c2 .wave { animation: wave2 2.4s ease-out infinite; }
+.c2 .w2 { animation-delay: 0.35s; }
+@keyframes bolt { 0% { opacity: 0.15; } 8% { opacity: 1; } 12% { opacity: 0.4; } 16% { opacity: 1; } 40% { opacity: 0.9; } 60% { opacity: 0.15; } 100% { opacity: 0.15; } }
+@keyframes spark { 0% { transform: scale(0.4); opacity: 0.3; } 12% { transform: scale(1.3); opacity: 1; } 50% { transform: scale(0.8); opacity: 0.8; } 70% { transform: scale(0.4); opacity: 0.3; } 100% { transform: scale(0.4); opacity: 0.3; } }
+@keyframes wave2 { 0% { opacity: 0; } 30% { opacity: 1; } 100% { opacity: 0; } }
+
+.c3 .sx { animation-duration: 5s; animation-timing-function: linear; animation-iteration-count: infinite; }
+.c3 .sy { animation: sy3 5s infinite; }
+.c3 .so { animation: so3 5s linear infinite; }
+.c3 .x1 { animation-name: sx31; }
+.c3 .x2 { animation-name: sx32; }
+.c3 .x3 { animation-name: sx33; }
+.c3 .ring { transform-box: fill-box; transform-origin: center; animation: ring3 5s ease-out infinite; }
+.c3 .d2 { animation-delay: 1.6s; }
+.c3 .d3 { animation-delay: 3.2s; }
+@keyframes sx31 { 0% { transform: translateX(0); } 60% { transform: translateX(-115px); } 100% { transform: translateX(-115px); } }
+@keyframes sx32 { 0% { transform: translateX(0); } 60% { transform: translateX(-160px); } 100% { transform: translateX(-160px); } }
+@keyframes sx33 { 0% { transform: translateX(0); } 60% { transform: translateX(-70px); } 100% { transform: translateX(-70px); } }
+@keyframes sy3 { 0% { transform: translateY(0); animation-timing-function: cubic-bezier(0.33, 0.67, 0.67, 1); } 15% { transform: translateY(-30px); animation-timing-function: cubic-bezier(0.33, 0, 0.67, 0.33); } 60% { transform: translateY(76px); } 100% { transform: translateY(76px); } }
+@keyframes so3 { 0% { opacity: 0; } 3% { opacity: 1; } 57% { opacity: 1; } 62% { opacity: 0; } 100% { opacity: 0; } }
+@keyframes ring3 { 0% { transform: scale(0.2); opacity: 0; } 58% { transform: scale(0.2); opacity: 0; } 62% { transform: scale(0.5); opacity: 1; } 90% { transform: scale(1.8); opacity: 0; } 100% { transform: scale(1.8); opacity: 0; } }
+
+.c4 .hum { animation: hum 6s ease-in-out infinite; }
+.c4 .fadeA { animation: fadeA 16s ease-in-out infinite; }
+.c4 .fadeE { animation: fadeE 16s ease-in-out infinite; }
+.c4 .wave { animation: wave4 6s ease-in-out infinite; }
+.c4 .w2 { animation-delay: 1.2s; }
+.c4 .sx { animation: sx4 6s linear infinite; }
+.c4 .sy { animation: sy4 6s infinite; }
+.c4 .so { animation: so4 6s linear infinite; }
+@keyframes hum { 0% { opacity: 0.72; } 50% { opacity: 1; } 100% { opacity: 0.72; } }
+@keyframes fadeA { 0% { opacity: 1; } 35% { opacity: 1; } 50% { opacity: 0.12; } 85% { opacity: 0.12; } 100% { opacity: 1; } }
+@keyframes fadeE { 0% { opacity: 0.12; } 35% { opacity: 0.12; } 50% { opacity: 1; } 85% { opacity: 1; } 100% { opacity: 0.12; } }
+@keyframes wave4 { 0% { opacity: 0.15; } 50% { opacity: 1; } 100% { opacity: 0.15; } }
+@keyframes sx4 { 0% { transform: translateX(0); } 50% { transform: translateX(-118px); } 100% { transform: translateX(-118px); } }
+@keyframes sy4 { 0% { transform: translateY(0); animation-timing-function: cubic-bezier(0.33, 0.67, 0.67, 1); } 12.5% { transform: translateY(-26px); animation-timing-function: cubic-bezier(0.33, 0, 0.67, 0.33); } 50% { transform: translateY(58px); } 100% { transform: translateY(58px); } }
+@keyframes so4 { 0% { opacity: 0; } 3% { opacity: 1; } 47% { opacity: 1; } 52% { opacity: 0; } 100% { opacity: 0; } }
+
+.c5 .tap { animation: tap 4s ease-in-out infinite; }
+.c5 .ring { transform-box: fill-box; transform-origin: center; animation: ring5 4s ease-out infinite; }
+.c5 .r2 { animation-delay: 0.5s; }
+@keyframes tap { 0% { transform: translate(-7px, -5px); } 20% { transform: translate(0, 0); } 32% { transform: translate(0, 0); } 60% { transform: translate(-7px, -5px); } 100% { transform: translate(-7px, -5px); } }
+@keyframes ring5 { 0% { transform: scale(0.1); opacity: 0; } 20% { transform: scale(0.1); opacity: 0; } 23% { transform: scale(0.18); opacity: 1; } 75% { transform: scale(1); opacity: 0; } 100% { transform: scale(1); opacity: 0; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .deck * { animation: none !important; }
+}
+</style>
+</head>
+<body>
+<main class="deck">
+<section class="page c1" aria-label="Card I">
+<div class="inner">
+<div class="card"><div class="frame">
+<div class="num">I</div>
+<div class="art"><svg viewBox="0 0 330 480" preserveAspectRatio="xMidYMax meet" role="img" aria-label="A tarot-style card. A sun with a watching eye sends light down to a plant in a night sky, while water rises through its roots below ground." fill="none" stroke="#e7dcc2" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+<rect x="0" y="0" width="330" height="480" fill="#3b3226" stroke="none"></rect>
+
+<g fill="#d9b44a" stroke="none">
+<g transform="translate(70 112)"><path class="tw" d="M0 -4 L1 -1 L4 0 L1 1 L0 4 L-1 1 L-4 0 L-1 -1 Z"></path></g>
+<g transform="translate(262 124)"><path class="tw t2" d="M0 -4 L1 -1 L4 0 L1 1 L0 4 L-1 1 L-4 0 L-1 -1 Z"></path></g>
+<g transform="translate(30 204)"><path class="tw t3" d="M0 -4 L1 -1 L4 0 L1 1 L0 4 L-1 1 L-4 0 L-1 -1 Z"></path></g>
+<g transform="translate(302 262)"><path class="tw" d="M0 -4 L1 -1 L4 0 L1 1 L0 4 L-1 1 L-4 0 L-1 -1 Z"></path></g>
+<g transform="translate(56 284)"><path class="tw t2" d="M0 -4 L1 -1 L4 0 L1 1 L0 4 L-1 1 L-4 0 L-1 -1 Z"></path></g>
+<g transform="translate(250 28)"><path class="tw t3" d="M0 -4 L1 -1 L4 0 L1 1 L0 4 L-1 1 L-4 0 L-1 -1 Z"></path></g>
+<g transform="translate(82 34)"><path class="tw" d="M0 -4 L1 -1 L4 0 L1 1 L0 4 L-1 1 L-4 0 L-1 -1 Z"></path></g>
+<path d="M40 36 A14 14 0 0 0 40 64 A18 18 0 0 1 40 36 Z"></path>
+<path d="M290 36 A14 14 0 0 1 290 64 A18 18 0 0 0 290 36 Z"></path>
+</g>
+
+<g class="spin" stroke="#d9b44a" stroke-width="1.6">
+<line x1="165" y1="40" x2="165" y2="22"></line>
+<line x1="165" y1="40" x2="165" y2="22" transform="rotate(45 165 74)"></line>
+<line x1="165" y1="40" x2="165" y2="22" transform="rotate(90 165 74)"></line>
+<line x1="165" y1="40" x2="165" y2="22" transform="rotate(135 165 74)"></line>
+<line x1="165" y1="40" x2="165" y2="22" transform="rotate(180 165 74)"></line>
+<line x1="165" y1="40" x2="165" y2="22" transform="rotate(225 165 74)"></line>
+<line x1="165" y1="40" x2="165" y2="22" transform="rotate(270 165 74)"></line>
+<line x1="165" y1="40" x2="165" y2="22" transform="rotate(315 165 74)"></line>
+<line x1="165" y1="40" x2="165" y2="30" stroke-width="1" transform="rotate(22.5 165 74)"></line>
+<line x1="165" y1="40" x2="165" y2="30" stroke-width="1" transform="rotate(67.5 165 74)"></line>
+<line x1="165" y1="40" x2="165" y2="30" stroke-width="1" transform="rotate(112.5 165 74)"></line>
+<line x1="165" y1="40" x2="165" y2="30" stroke-width="1" transform="rotate(157.5 165 74)"></line>
+<line x1="165" y1="40" x2="165" y2="30" stroke-width="1" transform="rotate(202.5 165 74)"></line>
+<line x1="165" y1="40" x2="165" y2="30" stroke-width="1" transform="rotate(247.5 165 74)"></line>
+<line x1="165" y1="40" x2="165" y2="30" stroke-width="1" transform="rotate(292.5 165 74)"></line>
+<line x1="165" y1="40" x2="165" y2="30" stroke-width="1" transform="rotate(337.5 165 74)"></line>
+</g>
+<circle cx="165" cy="74" r="26" fill="#d9b44a" stroke="#a8842c"></circle>
+<g class="blink">
+<path d="M149 74 Q165 60 181 74 Q165 88 149 74 Z" fill="#e7dcc2" stroke="#3b3226" stroke-width="1"></path>
+<circle cx="165" cy="74" r="5.5" fill="#3b3226" stroke="none"></circle>
+</g>
+
+<g stroke="#d9b44a" stroke-width="1.6">
+<path class="flow" d="M165 130 V150"></path>
+<path class="flow" d="M144 122 L114 204"></path>
+<path class="flow" d="M186 122 L216 204"></path>
+<path class="flow" d="M130 108 L100 246"></path>
+<path class="flow" d="M200 108 L230 246"></path>
+</g>
+
+<path d="M-400 322 H0 C 60 314, 110 328, 165 322 S 270 316, 330 322 H730 V1200 H-400 Z" fill="#e7dcc2" stroke="none"></path>
+<g stroke="#3b3226">
+<path d="M22 336 h10 M52 344 h8 M86 338 h10 M228 338 h10 M262 344 h8 M296 336 h10 M34 420 h8 M70 444 h10 M250 446 h10 M290 422 h8 M120 458 h8 M204 458 h8" stroke="#6e5f48" stroke-width="0.8"></path>
+<path d="M165 322 C 166 352, 164 384, 166 422" stroke-width="1.1"></path>
+<path d="M165 324 C 150 347, 135 362, 118 394" stroke-width="1.1"></path>
+<path d="M165 324 C 180 347, 195 362, 212 394" stroke-width="1.1"></path>
+<path d="M162 338 C 140 346, 118 348, 96 364" stroke-width="1.1"></path>
+<path d="M168 338 C 190 346, 212 348, 234 364" stroke-width="1.1"></path>
+</g>
+<g stroke="#5d7491" stroke-width="1.8">
+<path class="up" d="M165 322 C 166 352, 164 384, 166 422"></path>
+<path class="up" d="M165 324 C 150 347, 135 362, 118 394"></path>
+<path class="up" d="M165 324 C 180 347, 195 362, 212 394"></path>
+<path class="up" d="M162 338 C 140 346, 118 348, 96 364"></path>
+<path class="up" d="M168 338 C 190 346, 212 348, 234 364"></path>
+</g>
+<g fill="#5d7491" stroke="none">
+<g transform="translate(104 402)"><path class="tw" d="M0 -6 C 4 -1, 4 3, 0 4 C -4 3, -4 -1, 0 -6 Z"></path></g>
+<g transform="translate(226 402)"><path class="tw t2" d="M0 -6 C 4 -1, 4 3, 0 4 C -4 3, -4 -1, 0 -6 Z"></path></g>
+<g transform="translate(82 372)"><path class="tw t3" d="M0 -6 C 4 -1, 4 3, 0 4 C -4 3, -4 -1, 0 -6 Z"></path></g>
+<g transform="translate(248 372)"><path class="tw" d="M0 -6 C 4 -1, 4 3, 0 4 C -4 3, -4 -1, 0 -6 Z"></path></g>
+<g transform="translate(166 438)"><path class="tw t2" d="M0 -6 C 4 -1, 4 3, 0 4 C -4 3, -4 -1, 0 -6 Z"></path></g>
+</g>
+
+<g class="sway">
+<path d="M165 322 V186" stroke-width="1.8"></path>
+<path d="M165 280 C 148 252, 118 242, 95 250 C 108 272, 138 284, 165 280 Z" fill="#7d8a5c"></path>
+<path d="M165 280 C 142 268, 118 256, 95 250" stroke-width="0.8"></path>
+<path d="M165 280 C 182 252, 212 242, 235 250 C 222 272, 192 284, 165 280 Z" fill="#7d8a5c"></path>
+<path d="M165 280 C 188 268, 212 256, 235 250" stroke-width="0.8"></path>
+<path d="M165 245 C 150 222, 128 208, 108 208 C 116 228, 140 244, 165 245 Z" fill="#7d8a5c"></path>
+<path d="M165 245 C 146 232, 126 218, 108 208" stroke-width="0.8"></path>
+<path d="M165 245 C 180 222, 202 208, 222 208 C 214 228, 190 244, 165 245 Z" fill="#7d8a5c"></path>
+<path d="M165 245 C 184 232, 204 218, 222 208" stroke-width="0.8"></path>
+<path d="M165 212 C 152 196, 138 182, 124 176 C 128 194, 144 208, 165 212 Z" fill="#7d8a5c"></path>
+<path d="M165 212 C 178 196, 192 182, 206 176 C 202 194, 186 208, 165 212 Z" fill="#7d8a5c"></path>
+<path d="M165 186 C 157 175, 158 162, 165 152 C 172 162, 173 175, 165 186 Z" fill="#7d8a5c"></path>
+</g>
+
+<path class="breath" d="M250 196 q 6 -5 12 0 t 12 0" stroke-width="0.9"></path>
+<path class="breath b2" d="M256 184 q 5 -4 10 0 t 10 0" stroke-width="0.9"></path>
+
+<text class="lbl" x="48" y="162" fill="#e7dcc2">lumière</text>
+<text class="lbl" x="286" y="202" fill="#e7dcc2">air</text>
+<text class="lbl" x="258" y="408" fill="#3b3226">eau</text>
+</svg></div>
+<h1>La Vie Végétale</h1>
+</div></div>
+<p class="cap">A plant is never at rest. It takes in light, draws water from the soil, and answers every change in the room.</p>
+<div class="foot"><span class="pips"><b>I</b> · II · III · IV · V</span><span class="hint">swipe ›</span></div>
+</div>
+</section>
+<section class="page c2" aria-label="Card II">
+<div class="inner">
+<div class="card"><div class="frame">
+<div class="num">II</div>
+<div class="art"><svg viewBox="0 0 330 480" role="img" aria-label="A tarot-style card. A single upright leaf glows in the dark, crossed by gold lightning. A clip on each side carries the signal down two wires to a small sensor." fill="none" stroke="#e7dcc2" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+<rect x="0" y="0" width="330" height="480" fill="#3b3226" stroke="none"></rect>
+
+<g fill="#d9b44a" stroke="none">
+<g transform="translate(34 60)"><path class="tw" d="M0 -4 L1 -1 L4 0 L1 1 L0 4 L-1 1 L-4 0 L-1 -1 Z"></path></g>
+<g transform="translate(296 66)"><path class="tw t2" d="M0 -4 L1 -1 L4 0 L1 1 L0 4 L-1 1 L-4 0 L-1 -1 Z"></path></g>
+<g transform="translate(22 300)"><path class="tw t3" d="M0 -4 L1 -1 L4 0 L1 1 L0 4 L-1 1 L-4 0 L-1 -1 Z"></path></g>
+<g transform="translate(308 304)"><path class="tw" d="M0 -4 L1 -1 L4 0 L1 1 L0 4 L-1 1 L-4 0 L-1 -1 Z"></path></g>
+<g transform="translate(60 446)"><path class="tw t2" d="M0 -4 L1 -1 L4 0 L1 1 L0 4 L-1 1 L-4 0 L-1 -1 Z"></path></g>
+<g transform="translate(270 446)"><path class="tw t3" d="M0 -4 L1 -1 L4 0 L1 1 L0 4 L-1 1 L-4 0 L-1 -1 Z"></path></g>
+</g>
+
+<g class="glory" stroke="#d9b44a" stroke-width="1.2">
+<line x1="165" y1="52" x2="165" y2="34"></line>
+<line x1="165" y1="52" x2="165" y2="34" transform="rotate(15 165 200)"></line>
+<line x1="165" y1="52" x2="165" y2="34" transform="rotate(30 165 200)"></line>
+<line x1="165" y1="52" x2="165" y2="34" transform="rotate(45 165 200)"></line>
+<line x1="165" y1="52" x2="165" y2="34" transform="rotate(60 165 200)"></line>
+<line x1="165" y1="52" x2="165" y2="34" transform="rotate(75 165 200)"></line>
+<line x1="165" y1="52" x2="165" y2="34" transform="rotate(-15 165 200)"></line>
+<line x1="165" y1="52" x2="165" y2="34" transform="rotate(-30 165 200)"></line>
+<line x1="165" y1="52" x2="165" y2="34" transform="rotate(-45 165 200)"></line>
+<line x1="165" y1="52" x2="165" y2="34" transform="rotate(-60 165 200)"></line>
+<line x1="165" y1="52" x2="165" y2="34" transform="rotate(-75 165 200)"></line>
+</g>
+
+<path d="M165 330 V366" stroke-width="1.8"></path>
+<path d="M165 330 C 95 290, 85 170, 165 70 C 245 170, 235 290, 165 330 Z" fill="#7d8a5c"></path>
+<path d="M165 330 V70"></path>
+<path d="M165 290 L128 262 M165 250 L120 216 M165 205 L126 172 M165 160 L142 132" stroke-width="0.8"></path>
+<path d="M165 290 L202 262 M165 250 L210 216 M165 205 L204 172 M165 160 L188 132" stroke-width="0.8"></path>
+
+<g class="bolt" stroke="#d9b44a" stroke-width="2.2">
+<path d="M165 222 L150 214 L146 228 L130 218 L126 230 L122 222"></path>
+<path d="M165 222 L180 214 L184 228 L200 218 L204 230 L208 222"></path>
+</g>
+<g transform="translate(165 222)"><path class="spark" d="M0 -10 L2.2 -2.2 L10 0 L2.2 2.2 L0 10 L-2.2 2.2 L-10 0 L-2.2 -2.2 Z" fill="#d9b44a" stroke="#a8842c" stroke-width="0.6"></path></g>
+
+<path d="M86 222 C 40 226, 36 340, 90 380 C 110 394, 128 398, 140 404"></path>
+<path d="M244 222 C 290 226, 294 340, 240 380 C 220 394, 202 398, 190 404"></path>
+<path class="flow" d="M86 222 C 40 226, 36 340, 90 380 C 110 394, 128 398, 140 404" stroke="#d9b44a" stroke-width="1.8"></path>
+<path class="flow" d="M244 222 C 290 226, 294 340, 240 380 C 220 394, 202 398, 190 404" stroke="#d9b44a" stroke-width="1.8"></path>
+
+<g transform="translate(112 222) rotate(90)" stroke="#3b3226">
+<path d="M-4 -10 L-5 6 L-7 26 L7 26 L5 6 L4 -10 Z" fill="#e7dcc2"></path>
+<path d="M-4 -4 H4 M0 8 V26" stroke-width="0.8"></path>
+<circle cx="0" cy="8" r="2" fill="#3b3226"></circle>
+</g>
+<g transform="translate(218 222) rotate(-90)" stroke="#3b3226">
+<path d="M-4 -10 L-5 6 L-7 26 L7 26 L5 6 L4 -10 Z" fill="#e7dcc2"></path>
+<path d="M-4 -4 H4 M0 8 V26" stroke-width="0.8"></path>
+<circle cx="0" cy="8" r="2" fill="#3b3226"></circle>
+</g>
+
+<g stroke="#3b3226">
+<rect x="128" y="404" width="74" height="40" rx="5" fill="#e7dcc2"></rect>
+<circle cx="140" cy="404" r="2.5" fill="#3b3226"></circle>
+<circle cx="190" cy="404" r="2.5" fill="#3b3226"></circle>
+<circle cx="184" cy="426" r="7"></circle>
+<path d="M184 426 L188 421" stroke-width="1"></path>
+<circle cx="146" cy="426" r="3" fill="#a4452f" stroke-width="0.8"></circle>
+</g>
+
+<g stroke="#d9b44a" stroke-width="1.6">
+<path class="wave" d="M120 414 q -8 10 0 20"></path>
+<path class="wave w2" d="M112 408 q -14 16 0 32"></path>
+<path class="wave" d="M210 414 q 8 10 0 20"></path>
+<path class="wave w2" d="M218 408 q 14 16 0 32"></path>
+</g>
+
+<text class="lbl" x="70" y="206" text-anchor="middle" fill="#e7dcc2">pince</text>
+<text class="lbl" x="260" y="206" text-anchor="middle" fill="#e7dcc2">pince</text>
+<text class="lbl" x="165" y="464" text-anchor="middle" fill="#e7dcc2">capteur</text>
+</svg></div>
+<h1>Le Courant</h1>
+</div></div>
+<p class="cap">Its living produces faint electrical signals. Two clips on a leaf read them as they occur.</p>
+<div class="foot"><span class="pips">I · <b>II</b> · III · IV · V</span><span class="hint">swipe ›</span></div>
+</div>
+</section>
+<section class="page c3" aria-label="Card III">
+<div class="inner">
+<div class="card"><div class="frame">
+<div class="num">III</div>
+<div class="art"><svg viewBox="0 0 330 480" role="img" aria-label="A tarot-style card. Below, the plant in the room with its clips and sensor. Above, an arched window showing the same plant engraved on the screen, releasing a gold seed for every pulse. Each seed falls to the soil and rings." fill="none" stroke="#e7dcc2" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+<rect x="0" y="0" width="330" height="480" fill="#3b3226" stroke="none"></rect>
+
+<g fill="#d9b44a" stroke="none">
+<g transform="translate(24 40)"><path class="tw" d="M0 -4 L1 -1 L4 0 L1 1 L0 4 L-1 1 L-4 0 L-1 -1 Z"></path></g>
+<g transform="translate(306 44)"><path class="tw t2" d="M0 -4 L1 -1 L4 0 L1 1 L0 4 L-1 1 L-4 0 L-1 -1 Z"></path></g>
+<g transform="translate(20 180)"><path class="tw t3" d="M0 -4 L1 -1 L4 0 L1 1 L0 4 L-1 1 L-4 0 L-1 -1 Z"></path></g>
+<g transform="translate(312 170)"><path class="tw" d="M0 -4 L1 -1 L4 0 L1 1 L0 4 L-1 1 L-4 0 L-1 -1 Z"></path></g>
+<g transform="translate(40 290)"><path class="tw t2" d="M0 -4 L1 -1 L4 0 L1 1 L0 4 L-1 1 L-4 0 L-1 -1 Z"></path></g>
+<g transform="translate(150 296)"><path class="tw t3" d="M0 -4 L1 -1 L4 0 L1 1 L0 4 L-1 1 L-4 0 L-1 -1 Z"></path></g>
+<g transform="translate(60 440)"><path class="tw" d="M0 -4 L1 -1 L4 0 L1 1 L0 4 L-1 1 L-4 0 L-1 -1 Z"></path></g>
+<g transform="translate(160 448)"><path class="tw t2" d="M0 -4 L1 -1 L4 0 L1 1 L0 4 L-1 1 L-4 0 L-1 -1 Z"></path></g>
+<g transform="translate(110 326)"><path d="M0 -8 L1.8 -1.8 L8 0 L1.8 1.8 L0 8 L-1.8 1.8 L-8 0 L-1.8 -1.8 Z"></path></g>
+</g>
+
+<path d="M40 250 V90 A125 60 0 0 1 290 90 V250 Z" fill="#e7dcc2" stroke="#d9b44a" stroke-width="2"></path>
+<g stroke="#3b3226">
+<path d="M46 244 V92 A119 55 0 0 1 284 92 V244 Z" stroke-width="0.8"></path>
+<path d="M46 190 C 100 187, 150 193, 200 190 S 260 188, 284 190"></path>
+<path d="M58 197 l7 5 M96 198 l7 5 M140 197 l7 5 M186 198 l7 5 M214 197 l7 5 M262 196 l7 5" stroke="#6e5f48" stroke-width="0.8"></path>
+
+<path d="M240 114 Q 225.6 84 211.25 84 Q 168.1 84 125 190" stroke="#6e5f48" stroke-width="0.8" stroke-dasharray="1 5"></path>
+<path d="M240 114 Q 220 84 200 84 Q 140 84 80 190" stroke="#6e5f48" stroke-width="0.8" stroke-dasharray="1 5"></path>
+<path d="M240 114 Q 231.25 84 222.5 84 Q 196.25 84 170 190" stroke="#6e5f48" stroke-width="0.8" stroke-dasharray="1 5"></path>
+
+<path d="M240 190 C 242 172, 237 150, 240 132" stroke-width="1.6"></path>
+<path d="M240 172 C 228 160, 214 156, 204 158 C 210 170, 224 176, 240 172 Z" fill="#7d8a5c" fill-opacity="0.4"></path>
+<path d="M240 172 C 228 166, 216 161, 204 158" stroke-width="0.8"></path>
+<path d="M240 158 C 250 146, 262 142, 272 144 C 268 156, 256 162, 240 158 Z" fill="#7d8a5c" fill-opacity="0.4"></path>
+<path d="M240 158 C 251 153, 262 147, 272 144" stroke-width="0.8"></path>
+<path d="M240 132 C 233 127, 234 120, 240 114 C 246 120, 247 127, 240 132 Z" fill="#7d8a5c" fill-opacity="0.4"></path>
+</g>
+
+<circle class="ring" cx="125" cy="190" r="9" stroke="#a8842c" stroke-width="1.6"></circle>
+<circle class="ring d2" cx="80" cy="190" r="9" stroke="#a8842c" stroke-width="1.6"></circle>
+<circle class="ring d3" cx="170" cy="190" r="9" stroke="#a8842c" stroke-width="1.6"></circle>
+
+<g class="sx x1"><g class="sy"><ellipse class="so" cx="240" cy="114" rx="3.4" ry="4.6" fill="#d9b44a" stroke="#3b3226" stroke-width="0.8"></ellipse></g></g>
+<g class="sx x2 d2"><g class="sy d2"><ellipse class="so d2" cx="240" cy="114" rx="3.4" ry="4.6" fill="#d9b44a" stroke="#3b3226" stroke-width="0.8"></ellipse></g></g>
+<g class="sx x3 d3"><g class="sy d3"><ellipse class="so d3" cx="240" cy="114" rx="3.4" ry="4.6" fill="#d9b44a" stroke="#3b3226" stroke-width="0.8"></ellipse></g></g>
+
+<text class="lbl" x="150" y="62" text-anchor="middle" fill="#3b3226">à l'écran</text>
+<text class="lbl" x="56" y="230" fill="#3b3226">une graine, une note</text>
+
+<path class="flow" d="M240 250 V132" stroke="#a8842c" stroke-width="1.8"></path>
+<path class="flow" d="M299 430 C 304 360, 244 320, 240 250" stroke="#d9b44a" stroke-width="1.8"></path>
+
+<path d="M240 420 C 242 402, 237 380, 240 362" stroke-width="1.6"></path>
+<path d="M240 402 C 228 390, 214 386, 204 388 C 210 400, 224 406, 240 402 Z" fill="#7d8a5c"></path>
+<path d="M240 388 C 250 376, 262 372, 272 374 C 268 386, 256 392, 240 388 Z" fill="#7d8a5c"></path>
+<path d="M240 362 C 233 357, 234 350, 240 344 C 246 350, 247 357, 240 362 Z" fill="#7d8a5c"></path>
+<g stroke="#3b3226">
+<path d="M212 420 H268 V426 H212 Z" fill="#e7dcc2"></path>
+<path d="M216 426 H264 L258 462 H222 Z" fill="#e7dcc2"></path>
+</g>
+
+<path d="M264 376 C 282 372, 296 400, 296 430" stroke-width="0.9"></path>
+<path d="M256 388 C 272 394, 288 410, 290 430" stroke-width="0.9"></path>
+<g stroke="#3b3226" stroke-width="0.9">
+<rect x="259" y="371" width="6" height="8" rx="1" fill="#e7dcc2"></rect>
+<rect x="251" y="383" width="6" height="8" rx="1" fill="#e7dcc2"></rect>
+<rect x="284" y="430" width="30" height="22" rx="3" fill="#e7dcc2" stroke-width="1.2"></rect>
+</g>
+
+<text class="motto" x="110" y="354" text-anchor="middle" fill="#e7dcc2">ce qui est en bas</text>
+<text class="motto" x="110" y="372" text-anchor="middle" fill="#e7dcc2">est comme ce qui est en haut</text>
+<path d="M86 384 H134" stroke="#d9b44a" stroke-width="0.8"></path>
+
+<text class="lbl" x="240" y="476" text-anchor="middle" fill="#e7dcc2">dans la salle</text>
+</svg></div>
+<h1>La Musique</h1>
+</div></div>
+<p class="cap">Each signal becomes a note in the air and a seed on the plate. Nothing here is recorded. It is the plant's inner life, composing itself as you listen.</p>
+<div class="foot"><span class="pips">I · II · <b>III</b> · IV · V</span><span class="hint">swipe ›</span></div>
+</div>
+</section>
+<section class="page c4" aria-label="Card IV">
+<div class="inner">
+<div class="card"><div class="frame">
+<div class="num">IV</div>
+<div class="art"><svg viewBox="0 0 330 480" role="img" aria-label="A tarot-style card. A small plant drops gold seeds that gather in piles on the soil. Beneath each pile a glowing gold root grows down, and the roots braid together. One root slowly fades while a new one appears." fill="none" stroke="#e7dcc2" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+<rect x="0" y="0" width="330" height="480" fill="#3b3226" stroke="none"></rect>
+
+<g fill="#d9b44a" stroke="none">
+<g transform="translate(110 30)"><path class="tw" d="M0 -4 L1 -1 L4 0 L1 1 L0 4 L-1 1 L-4 0 L-1 -1 Z"></path></g>
+<g transform="translate(190 24)"><path class="tw t2" d="M0 -4 L1 -1 L4 0 L1 1 L0 4 L-1 1 L-4 0 L-1 -1 Z"></path></g>
+<g transform="translate(310 40)"><path class="tw t3" d="M0 -4 L1 -1 L4 0 L1 1 L0 4 L-1 1 L-4 0 L-1 -1 Z"></path></g>
+<g transform="translate(20 84)"><path class="tw" d="M0 -4 L1 -1 L4 0 L1 1 L0 4 L-1 1 L-4 0 L-1 -1 Z"></path></g>
+<g transform="translate(304 112)"><path class="tw t2" d="M0 -4 L1 -1 L4 0 L1 1 L0 4 L-1 1 L-4 0 L-1 -1 Z"></path></g>
+<path d="M40 26 A14 14 0 0 0 40 54 A18 18 0 0 1 40 26 Z"></path>
+</g>
+
+<path d="M268 76 Q 253.25 50 238.5 50 Q 194.25 50 150 134" stroke-width="0.8" stroke-dasharray="1 5" stroke-opacity="0.6"></path>
+
+<path d="M-400 142 H0 C 60 138, 110 146, 165 142 S 270 138, 330 142 H730"></path>
+
+<path d="M268 141 C 270 126, 266 108, 268 94" stroke-width="1.6"></path>
+<path d="M268 128 C 258 118, 246 114, 238 116 C 243 126, 255 132, 268 128 Z" fill="#7d8a5c"></path>
+<path d="M268 116 C 276 106, 286 102, 294 104 C 291 114, 281 119, 268 116 Z" fill="#7d8a5c"></path>
+<path d="M268 94 C 262 89, 263 82, 268 76 C 273 82, 274 89, 268 94 Z" fill="#7d8a5c"></path>
+
+<g class="sx"><g class="sy"><ellipse class="so" cx="268" cy="76" rx="3.2" ry="4.4" fill="#d9b44a" stroke="#a8842c" stroke-width="0.8"></ellipse></g></g>
+
+<g fill="#d9b44a" stroke="#a8842c" stroke-width="0.7">
+<ellipse cx="143" cy="135" rx="3" ry="4"></ellipse>
+<ellipse cx="150" cy="135" rx="3" ry="4"></ellipse>
+<ellipse cx="157" cy="135" rx="3" ry="4"></ellipse>
+<ellipse cx="146.5" cy="128" rx="3" ry="4"></ellipse>
+<ellipse cx="153.5" cy="128" rx="3" ry="4"></ellipse>
+<ellipse cx="211" cy="135" rx="3" ry="4"></ellipse>
+<ellipse cx="219" cy="135" rx="3" ry="4"></ellipse>
+<ellipse cx="215" cy="128" rx="3" ry="4"></ellipse>
+</g>
+
+<g class="hum" stroke="#d9b44a">
+<path d="M150 142 C 152 200, 146 260, 150 330 S 154 400, 150 440" stroke-width="2.6"></path>
+<path d="M215 142 C 218 190, 210 240, 214 300 S 220 360, 212 400" stroke-width="1.8"></path>
+<path d="M150 250 C 170 262, 190 246, 214 258"></path>
+<path d="M150 262 C 172 248, 192 266, 214 250"></path>
+<path d="M150 340 C 172 352, 194 336, 214 348"></path>
+<path d="M150 352 C 174 338, 196 356, 214 340"></path>
+<path d="M150 190 C 166 196, 176 208, 180 222" stroke-width="0.9"></path>
+<path d="M150 300 C 136 308, 126 322, 120 340" stroke-width="0.9"></path>
+<path d="M150 380 C 164 388, 176 402, 180 420" stroke-width="0.9"></path>
+<path d="M214 330 C 228 338, 238 352, 242 370" stroke-width="0.9"></path>
+</g>
+
+<g class="fadeA" stroke="#d9b44a">
+<path d="M70 142 C 66 190, 76 230, 72 280 S 64 330, 70 360" stroke-width="1.4"></path>
+<path d="M72 268 C 96 280, 122 264, 150 276"></path>
+<path d="M72 280 C 98 266, 124 284, 150 268"></path>
+<path d="M72 300 C 60 308, 52 322, 50 338" stroke-width="0.9"></path>
+<ellipse cx="66" cy="135" rx="3" ry="4" fill="#d9b44a" stroke="#a8842c" stroke-width="0.7"></ellipse>
+<ellipse cx="74" cy="135" rx="3" ry="4" fill="#d9b44a" stroke="#a8842c" stroke-width="0.7"></ellipse>
+</g>
+
+<g class="fadeE" stroke="#d9b44a">
+<path d="M110 142 C 112 180, 106 220, 110 250" stroke-width="1.4"></path>
+<path d="M110 200 C 122 210, 136 196, 150 206"></path>
+<path d="M110 210 C 124 198, 138 212, 150 200"></path>
+<ellipse cx="106" cy="135" rx="3" ry="4" fill="#d9b44a" stroke="#a8842c" stroke-width="0.7"></ellipse>
+<ellipse cx="114" cy="135" rx="3" ry="4" fill="#d9b44a" stroke="#a8842c" stroke-width="0.7"></ellipse>
+</g>
+
+<g stroke="#d9b44a" stroke-width="1.4">
+<path class="wave" d="M118 456 q 32 -14 64 0"></path>
+<path class="wave w2" d="M104 468 q 46 -18 92 0"></path>
+</g>
+
+<text class="lbl" x="24" y="108" fill="#e7dcc2">les notes préférées</text>
+<text class="lbl" x="232" y="458" fill="#e7dcc2">le bourdon</text>
+</svg></div>
+<h1>Les Racines</h1>
+</div></div>
+<p class="cap">Below ground, the roots gather the notes the plant keeps returning to and sustain them as a drone. As the plant comes to favor other notes, the drone slowly shifts with it.</p>
+<div class="foot"><span class="pips">I · II · III · <b>IV</b> · V</span><span class="hint">swipe ›</span></div>
+</div>
+</section>
+<section class="page c5" aria-label="Card V">
+<div class="inner">
+<div class="card"><div class="frame">
+<div class="num">V</div>
+<div class="art"><svg viewBox="0 0 330 480" role="img" aria-label="A tarot-style card. A hand reaches out of a cloud and touches a leaf between two clips. Gold rings spread out from the touch." fill="none" stroke="#e7dcc2" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+<rect x="0" y="0" width="330" height="480" fill="#3b3226" stroke="none"></rect>
+
+<g fill="#d9b44a" stroke="none">
+<g transform="translate(60 50)"><path class="tw" d="M0 -4 L1 -1 L4 0 L1 1 L0 4 L-1 1 L-4 0 L-1 -1 Z"></path></g>
+<g transform="translate(150 34)"><path class="tw t2" d="M0 -4 L1 -1 L4 0 L1 1 L0 4 L-1 1 L-4 0 L-1 -1 Z"></path></g>
+<g transform="translate(230 70)"><path class="tw t3" d="M0 -4 L1 -1 L4 0 L1 1 L0 4 L-1 1 L-4 0 L-1 -1 Z"></path></g>
+<g transform="translate(28 130)"><path class="tw t2" d="M0 -4 L1 -1 L4 0 L1 1 L0 4 L-1 1 L-4 0 L-1 -1 Z"></path></g>
+<g transform="translate(300 150)"><path class="tw" d="M0 -4 L1 -1 L4 0 L1 1 L0 4 L-1 1 L-4 0 L-1 -1 Z"></path></g>
+<g transform="translate(112 112)"><path class="tw t3" d="M0 -4 L1 -1 L4 0 L1 1 L0 4 L-1 1 L-4 0 L-1 -1 Z"></path></g>
+<g transform="translate(40 430)"><path class="tw" d="M0 -4 L1 -1 L4 0 L1 1 L0 4 L-1 1 L-4 0 L-1 -1 Z"></path></g>
+<g transform="translate(292 424)"><path class="tw t2" d="M0 -4 L1 -1 L4 0 L1 1 L0 4 L-1 1 L-4 0 L-1 -1 Z"></path></g>
+<path d="M290 36 A14 14 0 0 1 290 64 A18 18 0 0 0 290 36 Z"></path>
+</g>
+
+<path d="M113 277 C 60 300, 50 420, 40 480 L 34 900" stroke-width="0.9"></path>
+<path d="M217 277 C 270 300, 280 420, 290 480 L 296 900" stroke-width="0.9"></path>
+
+<path d="M165 410 V330" stroke-width="1.8"></path>
+<path d="M165 372 C 150 350, 126 342, 108 348 C 118 366, 142 376, 165 372 Z" fill="#7d8a5c"></path>
+<path d="M165 372 C 146 362, 126 352, 108 348" stroke-width="0.8"></path>
+<path d="M165 372 C 180 350, 204 342, 222 348 C 212 366, 188 376, 165 372 Z" fill="#7d8a5c"></path>
+<path d="M165 372 C 184 362, 204 352, 222 348" stroke-width="0.8"></path>
+<path d="M165 330 C 130 310, 126 250, 165 205 C 204 250, 200 310, 165 330 Z" fill="#7d8a5c"></path>
+<path d="M165 330 V205"></path>
+<path d="M165 306 L146 292 M165 280 L142 262 M165 254 L148 238 M165 306 L184 292 M165 280 L188 262 M165 254 L182 238" stroke-width="0.8"></path>
+
+<g stroke="#3b3226">
+<path d="M133 410 H197 V417 H133 Z" fill="#e7dcc2"></path>
+<path d="M137 417 H193 L186 458 H144 Z" fill="#e7dcc2"></path>
+</g>
+
+<g transform="translate(139 277) rotate(90)" stroke="#3b3226">
+<path d="M-4 -10 L-5 6 L-7 26 L7 26 L5 6 L4 -10 Z" fill="#e7dcc2"></path>
+<path d="M-4 -4 H4 M0 8 V26" stroke-width="0.8"></path>
+<circle cx="0" cy="8" r="2" fill="#3b3226"></circle>
+</g>
+<g transform="translate(191 277) rotate(-90)" stroke="#3b3226">
+<path d="M-4 -10 L-5 6 L-7 26 L7 26 L5 6 L4 -10 Z" fill="#e7dcc2"></path>
+<path d="M-4 -4 H4 M0 8 V26" stroke-width="0.8"></path>
+<circle cx="0" cy="8" r="2" fill="#3b3226"></circle>
+</g>
+
+<circle class="ring" cx="162" cy="260" r="80" stroke="#d9b44a" stroke-width="2"></circle>
+<circle class="ring r2" cx="162" cy="260" r="80" stroke="#d9b44a" stroke-width="1.4"></circle>
+
+<g class="tap">
+<g transform="translate(66.6 198) rotate(25)" stroke="#3b3226">
+<path d="M4 5 H22 V41 H4 Z" fill="#e7dcc2"></path>
+<path d="M10 5 V41" stroke-width="0.8"></path>
+<path d="M22 8 L58 6 L102 10 C 108 10.5, 111 13, 110 15.5 C 109 18.5, 106 19.5, 102 19.5 L68 20 C 77 20, 78 29, 69 29 C 77 29.5, 76 37, 67 37 C 73 38, 71 44, 62 43.5 C 48 45, 34 42, 22 38 Z" fill="#e7dcc2"></path>
+<path d="M40 21 C 50 17, 62 18, 70 22.5 C 62 26, 50 26.5, 43 25" stroke-width="0.9"></path>
+<path d="M103 11.5 C 106 12, 107.5 14, 106.5 16" stroke-width="0.8"></path>
+</g>
+</g>
+
+<g stroke="#3b3226">
+<path d="M0 196 C 6 180, 30 176, 40 188 C 50 172, 78 176, 80 194 C 96 196, 100 216, 86 224 C 92 240, 70 252, 56 242 C 44 256, 18 254, 12 240 C 4 240, 0 232, 0 226 Z" fill="#e7dcc2"></path>
+<path d="M14 204 q 8 -6 16 0 M40 200 q 9 -7 18 0 M24 222 q 9 -6 18 0 M54 220 q 8 -6 16 0 M30 238 q 8 -5 16 0" stroke="#6e5f48" stroke-width="0.8"></path>
+</g>
+
+<text class="lbl" x="22" y="280" fill="#e7dcc2">doucement</text>
+</svg></div>
+<h1>Le Toucher</h1>
+</div></div>
+<p class="cap">Touch a leaf, gently. The plant feels it, and answers.</p>
+<div class="foot"><span class="pips">I · II · III · IV · <b>V</b></span><span class="hint">‹ back</span></div>
+</div>
+</section>
+</main>
+</body>
+</html>
