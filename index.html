@@ -22,10 +22,19 @@ body { color: #3b3226; font-family: 'IM Fell English', Georgia, 'Times New Roman
 .art svg { display: block; width: 100%; height: 100%; }
 h1 { margin: 0; text-align: center; font-family: 'IM Fell English SC', Georgia, serif; font-weight: 400; font-size: 23px; line-height: 1.1; letter-spacing: 0.14em; padding: 9px 0 10px; border-top: 1px solid #3b3226; }
 .cap { margin: 0; padding: 0 10px; min-height: 5.6em; font-size: 17px; line-height: 1.4; text-align: center; }
-.foot { display: flex; justify-content: space-between; align-items: baseline; font-size: 14px; padding: 0 4px; }
-.pips { font-family: 'IM Fell English SC', Georgia, serif; letter-spacing: 0.2em; }
-.pips b { font-weight: 400; border-bottom: 2px solid #a8842c; padding-bottom: 2px; }
-.hint { font-style: italic; }
+.foot { display: flex; justify-content: space-between; align-items: center; font-size: 15px; padding: 0 4px; }
+.pips { font-family: 'IM Fell English SC', Georgia, serif; letter-spacing: 0.2em; margin-left: -11px; white-space: nowrap; }
+.pips a { color: inherit; text-decoration: none; display: inline-block; padding: 14px 11px; margin: -14px 0; -webkit-tap-highlight-color: rgba(168,132,44,0.25); }
+.pips a span { padding-bottom: 2px; border-bottom: 2px solid transparent; }
+.pips a[aria-current] span { border-bottom-color: #a8842c; }
+.pips a:focus-visible, .hint:focus-visible { outline: 2px solid #a8842c; outline-offset: -4px; }
+.hint { color: inherit; text-decoration: none; font-style: italic; display: inline-block; padding: 14px 8px; margin: -14px -8px -14px 0; white-space: nowrap; -webkit-tap-highlight-color: rgba(168,132,44,0.25); }
+.hint .chev { display: inline-block; animation: nudgeR 1.8s ease-in-out infinite; }
+.hint.prev .chev { animation-name: nudgeL; }
+.hint .word { display: inline-block; animation: nudgeW 1.8s ease-in-out infinite; }
+@keyframes nudgeR { 0% { transform: translateX(0); opacity: 0.45; } 50% { transform: translateX(8px); opacity: 1; } 100% { transform: translateX(0); opacity: 0.45; } }
+@keyframes nudgeL { 0% { transform: translateX(0); opacity: 0.45; } 50% { transform: translateX(-8px); opacity: 1; } 100% { transform: translateX(0); opacity: 0.45; } }
+@keyframes nudgeW { 0% { opacity: 0.7; } 50% { opacity: 1; } 100% { opacity: 0.7; } }
 .lbl { font-style: italic; font-size: 14px; stroke: none; }
 .motto { font-style: italic; font-size: 12.5px; stroke: none; }
 
@@ -102,7 +111,7 @@ h1 { margin: 0; text-align: center; font-family: 'IM Fell English SC', Georgia, 
 </head>
 <body>
 <main class="deck">
-<section class="page c1" aria-label="Card I">
+<section class="page c1" id="c1" aria-label="Card I">
 <div class="inner">
 <div class="card"><div class="frame">
 <div class="num">I</div>
@@ -202,10 +211,10 @@ h1 { margin: 0; text-align: center; font-family: 'IM Fell English SC', Georgia, 
 <h1>La Vie Végétale</h1>
 </div></div>
 <p class="cap">A plant is never at rest. It takes in light, draws water from the soil, and answers every change in the room.</p>
-<div class="foot"><span class="pips"><b>I</b> · II · III · IV · V</span><span class="hint">swipe ›</span></div>
+<div class="foot"><nav class="pips" aria-label="Cards"><a href="#c1" data-go="0" aria-label="Card I" aria-current="true"><span>I</span></a>·<a href="#c2" data-go="1" aria-label="Card II"><span>II</span></a>·<a href="#c3" data-go="2" aria-label="Card III"><span>III</span></a>·<a href="#c4" data-go="3" aria-label="Card IV"><span>IV</span></a>·<a href="#c5" data-go="4" aria-label="Card V"><span>V</span></a></nav><a class="hint" href="#c2" data-go="1" aria-label="Next card"><span class="word">swipe</span> <span class="chev">›</span></a></div>
 </div>
 </section>
-<section class="page c2" aria-label="Card II">
+<section class="page c2" id="c2" aria-label="Card II">
 <div class="inner">
 <div class="card"><div class="frame">
 <div class="num">II</div>
@@ -286,10 +295,10 @@ h1 { margin: 0; text-align: center; font-family: 'IM Fell English SC', Georgia, 
 <h1>Le Courant</h1>
 </div></div>
 <p class="cap">Many of the plant's biological functions create electrical events, such as turning light into energy or moving water through its roots. Two clips capture these signals as they occur.</p>
-<div class="foot"><span class="pips">I · <b>II</b> · III · IV · V</span><span class="hint">swipe ›</span></div>
+<div class="foot"><nav class="pips" aria-label="Cards"><a href="#c1" data-go="0" aria-label="Card I"><span>I</span></a>·<a href="#c2" data-go="1" aria-label="Card II" aria-current="true"><span>II</span></a>·<a href="#c3" data-go="2" aria-label="Card III"><span>III</span></a>·<a href="#c4" data-go="3" aria-label="Card IV"><span>IV</span></a>·<a href="#c5" data-go="4" aria-label="Card V"><span>V</span></a></nav><a class="hint" href="#c3" data-go="2" aria-label="Next card"><span class="word">swipe</span> <span class="chev">›</span></a></div>
 </div>
 </section>
-<section class="page c3" aria-label="Card III">
+<section class="page c3" id="c3" aria-label="Card III">
 <div class="inner">
 <div class="card"><div class="frame">
 <div class="num">III</div>
@@ -366,10 +375,10 @@ h1 { margin: 0; text-align: center; font-family: 'IM Fell English SC', Georgia, 
 <h1>La Musique</h1>
 </div></div>
 <p class="cap">Each signal becomes a note in the air and a seed on the plate. Nothing here is recorded. It is the plant's inner life, composing itself as you listen.</p>
-<div class="foot"><span class="pips">I · II · <b>III</b> · IV · V</span><span class="hint">swipe ›</span></div>
+<div class="foot"><nav class="pips" aria-label="Cards"><a href="#c1" data-go="0" aria-label="Card I"><span>I</span></a>·<a href="#c2" data-go="1" aria-label="Card II"><span>II</span></a>·<a href="#c3" data-go="2" aria-label="Card III" aria-current="true"><span>III</span></a>·<a href="#c4" data-go="3" aria-label="Card IV"><span>IV</span></a>·<a href="#c5" data-go="4" aria-label="Card V"><span>V</span></a></nav><a class="hint" href="#c4" data-go="3" aria-label="Next card"><span class="word">swipe</span> <span class="chev">›</span></a></div>
 </div>
 </section>
-<section class="page c4" aria-label="Card IV">
+<section class="page c4" id="c4" aria-label="Card IV">
 <div class="inner">
 <div class="card"><div class="frame">
 <div class="num">IV</div>
@@ -448,10 +457,10 @@ h1 { margin: 0; text-align: center; font-family: 'IM Fell English SC', Georgia, 
 <h1>Les Racines</h1>
 </div></div>
 <p class="cap">Below ground, the roots gather the notes the plant keeps returning to and sustain them as a drone. As the plant comes to favor other notes, the drone slowly shifts with it.</p>
-<div class="foot"><span class="pips">I · II · III · <b>IV</b> · V</span><span class="hint">swipe ›</span></div>
+<div class="foot"><nav class="pips" aria-label="Cards"><a href="#c1" data-go="0" aria-label="Card I"><span>I</span></a>·<a href="#c2" data-go="1" aria-label="Card II"><span>II</span></a>·<a href="#c3" data-go="2" aria-label="Card III"><span>III</span></a>·<a href="#c4" data-go="3" aria-label="Card IV" aria-current="true"><span>IV</span></a>·<a href="#c5" data-go="4" aria-label="Card V"><span>V</span></a></nav><a class="hint" href="#c5" data-go="4" aria-label="Next card"><span class="word">swipe</span> <span class="chev">›</span></a></div>
 </div>
 </section>
-<section class="page c5" aria-label="Card V">
+<section class="page c5" id="c5" aria-label="Card V">
 <div class="inner">
 <div class="card"><div class="frame">
 <div class="num">V</div>
@@ -521,9 +530,22 @@ h1 { margin: 0; text-align: center; font-family: 'IM Fell English SC', Georgia, 
 <h1>Le Toucher</h1>
 </div></div>
 <p class="cap">Touch a leaf, gently. The plant feels it, and answers.</p>
-<div class="foot"><span class="pips">I · II · III · IV · <b>V</b></span><span class="hint">‹ back</span></div>
+<div class="foot"><nav class="pips" aria-label="Cards"><a href="#c1" data-go="0" aria-label="Card I"><span>I</span></a>·<a href="#c2" data-go="1" aria-label="Card II"><span>II</span></a>·<a href="#c3" data-go="2" aria-label="Card III"><span>III</span></a>·<a href="#c4" data-go="3" aria-label="Card IV"><span>IV</span></a>·<a href="#c5" data-go="4" aria-label="Card V" aria-current="true"><span>V</span></a></nav><a class="hint prev" href="#c4" data-go="3" aria-label="Previous card"><span class="chev">‹</span> <span class="word">back</span></a></div>
 </div>
 </section>
 </main>
+<script>
+(function () {
+  var deck = document.querySelector('.deck');
+  var calm = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest ? e.target.closest('a[data-go]') : null;
+    if (!a) return;
+    e.preventDefault();
+    var i = parseInt(a.getAttribute('data-go'), 10);
+    deck.scrollTo({ left: i * deck.clientWidth, behavior: calm ? 'auto' : 'smooth' });
+  });
+})();
+</script>
 </body>
 </html>
